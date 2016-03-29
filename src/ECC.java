@@ -24,7 +24,7 @@ public class ECC {
     ArrayList<Point> GaloisField; //list of points satisfy Galois field
     
     //point multiplication eq. -> q=k.p
-    Point q; //will be public key
+//    Point q; //will be public key
     long k; //will be private key
     Point p; // basis point
     
@@ -49,12 +49,13 @@ public class ECC {
     }
     
     // scalar multiplication of a point, count q -> q= k.p
-    public void doScalarMultiply(int k){
+    public static Point doScalarMultiply(long k, Point p){
         
+        return null;
     }
     
-    public Point getQ(){
-        return this.q;
-    }
+//    public Point getQ(){
+//        return this.q;
+//    }
     
 }

@@ -13,11 +13,11 @@ import java.awt.Point;
 public class ElGamal {
     
     //attr
-    long publicKey;
+    Point publicKey;
     long privateKey;
     Point basis;
     
-    public ElGamal(long pub, long pri){
+    public ElGamal(Point pub, long pri){
         this.publicKey = pub;
         this.privateKey = pri;
     }
