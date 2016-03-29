@@ -24,22 +24,22 @@ public class ECC {
     ArrayList<Point> GaloisField; //list of points satisfy Galois field
     
     //point multiplication eq. -> q=k.p
-    long q; //will be public key
+    Point q; //will be public key
     long k; //will be private key
-    long p; // basis point
+    Point p; // basis point
     
     //constructor
     public ECC(int a, int b, int m){
         this.a = a;
         this.b = b;
-        this.p = m; 
+        this.m = m; 
     }
     
     public void setK(long k){
         this.k = k;
     }
     
-    public void setP(long p){
+    public void setP(Point p){
         this.p = p;
     }
     
@@ -53,7 +53,7 @@ public class ECC {
         
     }
     
-    public long getQ(){
+    public Point getQ(){
         return this.q;
     }
     
