@@ -35,18 +35,18 @@ public class ElGamal {
     }
     
     
-    public ArrayList<Point> toPoints(String message) throws UnsupportedEncodingException{
-        byte[] b = message.getBytes("UTF-8");
+    public ArrayList<Point> toPoints(byte[] message) throws UnsupportedEncodingException{
+//        byte[] b = message.getBytes("UTF-8");
         ArrayList<Point> res = new ArrayList<>();
-        for(int i=0; i<b.length; i++){
-            int temp = b[i];
-            res.add(ECC.GaloisField.get(temp));
+        for(int i=0; i<message.length; i++){
+            int temp = message[i];
+            res.add(ECC.GaloisField.get(temp & 0xFF));
         }
         
         return res;
     }
     
-    public String EncryptElGamal(String message, Point pub, Point B) throws UnsupportedEncodingException{
+    public String EncryptElGamal(byte[] message, Point pub, Point B) throws UnsupportedEncodingException{
         String res = ""; //hexadecimal
         ArrayList<Point> Pm = toPoints(message);
         System.out.println("Pm size"+ Pm.size());
@@ -118,20 +118,20 @@ public class ElGamal {
         return byteRes;
     }
     
-    public static void main(String[] args) throws UnsupportedEncodingException{
-        ECC.setEq(43, 46, 241);
-        ECC.countGaloisField();
-//        for (long i = 0;i<ECC.GaloisField.size();i++){
-//            System.out.println("G"+i+" "+ECC.GaloisField.get((int) i));
-//        }
-        String message = "Hello World";
-        ElGamal E = new ElGamal();
-        long priB = 105;
-        Point B = new Point(12,230); //basis
-        Point pub = E.generatePublicKey(priB, B);
-        String encrypted = E.EncryptElGamal(message,pub,B);
-        System.out.println("Encrypt: "+ encrypted);
-        String decrypted = E.DecryptElGamal(encrypted, priB);
-        System.out.println("Decrypt " + decrypted);
-    }
+//    public static void main(String[] args) throws UnsupportedEncodingException{
+//        ECC.setEq(43, 46, 241);
+//        ECC.countGaloisField();
+////        for (long i = 0;i<ECC.GaloisField.size();i++){
+////            System.out.println("G"+i+" "+ECC.GaloisField.get((int) i));
+////        }
+//        String message = "Hello World";
+//        ElGamal E = new ElGamal();
+//        long priB = 105;
+//        Point B = new Point(12,230); //basis
+//        Point pub = E.generatePublicKey(priB, B);
+//        String encrypted = E.EncryptElGamal(message,pub,B);
+//        System.out.println("Encrypt: "+ encrypted);
+//        String decrypted = E.DecryptElGamal(encrypted, priB);
+//        System.out.println("Decrypt " + decrypted);
+//    }
 }

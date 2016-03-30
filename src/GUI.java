@@ -1,9 +1,18 @@
 
+import java.awt.Point;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -19,6 +28,9 @@ import javax.swing.JFileChooser;
  */
 public class GUI extends javax.swing.JFrame {
 
+    //attr
+    byte[] plainByte;
+    
     /**
      * Creates new form GUI
      */
@@ -46,11 +58,11 @@ public class GUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         processTimeLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        input = new javax.swing.JTextArea();
-        inputLabel = new javax.swing.JLabel();
-        openButton = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
         input1 = new javax.swing.JTextArea();
+        inputLabel = new javax.swing.JLabel();
+        openButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        output1 = new javax.swing.JTextArea();
         keyLabel2 = new javax.swing.JLabel();
         saveCipherButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -68,7 +80,7 @@ public class GUI extends javax.swing.JFrame {
         input3 = new javax.swing.JTextArea();
         keyLabel3 = new javax.swing.JLabel();
         inputLabel1 = new javax.swing.JLabel();
-        openButton1 = new javax.swing.JButton();
+        openButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -161,25 +173,25 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
-        input.setColumns(20);
-        input.setRows(5);
-        jScrollPane1.setViewportView(input);
+        input1.setColumns(20);
+        input1.setRows(5);
+        jScrollPane1.setViewportView(input1);
 
         inputLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         inputLabel.setText("PlainText :");
 
-        openButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        openButton.setText("Open");
-        openButton.setName(""); // NOI18N
-        openButton.addActionListener(new java.awt.event.ActionListener() {
+        openButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        openButton1.setText("Open");
+        openButton1.setName(""); // NOI18N
+        openButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openButtonActionPerformed(evt);
+                openButton1ActionPerformed(evt);
             }
         });
 
-        input1.setColumns(20);
-        input1.setRows(5);
-        jScrollPane2.setViewportView(input1);
+        output1.setColumns(20);
+        output1.setRows(5);
+        jScrollPane2.setViewportView(output1);
 
         keyLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         keyLabel2.setText("Ciphertext :");
@@ -291,12 +303,12 @@ public class GUI extends javax.swing.JFrame {
         inputLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         inputLabel1.setText("Ciphertext :");
 
-        openButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        openButton1.setText("Open");
-        openButton1.setName(""); // NOI18N
-        openButton1.addActionListener(new java.awt.event.ActionListener() {
+        openButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        openButton2.setText("Open");
+        openButton2.setName(""); // NOI18N
+        openButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openButton1ActionPerformed(evt);
+                openButton2ActionPerformed(evt);
             }
         });
 
@@ -314,7 +326,7 @@ public class GUI extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(inputLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(openButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(openButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,7 +339,7 @@ public class GUI extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(inputLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(openButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(openButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -350,7 +362,7 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(saveCipherButton)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(inputLabel)
-                                .addComponent(openButton)))
+                                .addComponent(openButton1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
@@ -361,7 +373,7 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(inputLabel1)
-                            .addComponent(openButton1)
+                            .addComponent(openButton2)
                             .addComponent(keyLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -376,7 +388,7 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_privateKeyField1ActionPerformed
 
-    private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
+    private void openButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButton1ActionPerformed
         // TODO add your handling code here:
         int returnVal = fileChooser.showOpenDialog(this);
 
@@ -396,18 +408,40 @@ public class GUI extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        // Always wrap FileReader in BufferedReader.
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        
+        //load as bytes
+        Path path = Paths.get(filePath);
         try {
-            input.read(bufferedReader, filePath);
+            plainByte = Files.readAllBytes(path);
         } catch (IOException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_openButtonActionPerformed
+        
+        // Always wrap FileReader in BufferedReader.
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        try {
+            input1.read(bufferedReader, filePath);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_openButton1ActionPerformed
 
     private void saveCipherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCipherButtonActionPerformed
         // TODO add your handling code here:
+        // TODO add your handling code here:
+        int returnVal = fileChooser.showSaveDialog(this);
+       
+        // process selected file
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            try (BufferedWriter fileOut = new BufferedWriter(new FileWriter(file))) {
+                output1.write(fileOut);
+            } catch (IOException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            //System.out.println("File access cancelled by user.");
+        }
     }//GEN-LAST:event_saveCipherButtonActionPerformed
 
     private void saveKeyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveKeyButtonActionPerformed
@@ -416,6 +450,29 @@ public class GUI extends javax.swing.JFrame {
 
     private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptButtonActionPerformed
         // TODO add your handling code here:
+        ECC.setEq(43, 46, 241);
+        ECC.countGaloisField();
+        
+        ElGamal E = new ElGamal();
+        long priB = Long.parseLong(this.privateKeyField1.getText());
+        Point B = new Point(12,230); //basis
+        Point pub = E.generatePublicKey(priB, B);
+        String encrypted;
+        try {
+            encrypted = E.EncryptElGamal(plainByte,pub,B);
+            output1.append(encrypted); // append to jtextarea
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+//        //read by line
+//        String s[] = input1.getText().split("\\r?\\n");
+//        ArrayList<String>inputList = new ArrayList<>(Arrays.asList(s));
+//        for(int i=0; i<inputList.size(); i++){
+//            String message = inputList.get(i);
+//            output1.append(encrypted + "\n"); // append to jtextarea
+//        }
+        
     }//GEN-LAST:event_encryptButtonActionPerformed
 
     private void privateKeyField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_privateKeyField2ActionPerformed
@@ -430,9 +487,9 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_decryptButtonActionPerformed
 
-    private void openButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButton1ActionPerformed
+    private void openButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButton2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_openButton1ActionPerformed
+    }//GEN-LAST:event_openButton2ActionPerformed
 
     private void publicKeyField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicKeyField1ActionPerformed
         // TODO add your handling code here:
@@ -477,7 +534,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton decryptButton;
     private javax.swing.JButton encryptButton;
     private javax.swing.JFileChooser fileChooser;
-    private javax.swing.JTextArea input;
     private javax.swing.JTextArea input1;
     private javax.swing.JTextArea input2;
     private javax.swing.JTextArea input3;
@@ -493,8 +549,9 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel keyLabel2;
     private javax.swing.JLabel keyLabel3;
-    private javax.swing.JButton openButton;
     private javax.swing.JButton openButton1;
+    private javax.swing.JButton openButton2;
+    private javax.swing.JTextArea output1;
     private javax.swing.JTextField privateKeyField1;
     private javax.swing.JTextField privateKeyField2;
     private javax.swing.JLabel privateLabel;

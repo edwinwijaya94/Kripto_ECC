@@ -104,6 +104,10 @@ public class ECC {
         else if(q.x == 0 && q.y == 0){
             out = p;
         }
+        else if(p.x-q.x == 0){
+            out.x = (int) Long.MAX_VALUE;
+            out.y = (int) Long.MAX_VALUE;
+        }
         else{
             long lambda = (p.y - q.y + m) % m;
 //            System.out.println("pxqx "+(p.x-q.x));
