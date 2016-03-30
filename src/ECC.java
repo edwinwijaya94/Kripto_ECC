@@ -129,32 +129,17 @@ public class ECC {
     }
     
     // scalar multiplication of a point, count q -> q= k.p
-    public static void doScalarMultiply(long k, Point p,Point out){
-        long temp = k;
-        Point tempP = p;
+    public static Point doScalarMultiply(long k, Point p){
         
-//        while(temp>=2){
-//            if (k%2 != 0){
-//                out = doPlus(out,tempP);
-//                System.out.println("out after plus "+out);
-//            }
-//            tempP = doDouble(tempP);
-//            System.out.println("tempP "+tempP);
-//            k = temp;
-//            temp = k/2;
-//        }
-//            if(temp>=2){
-//                doScalarMultiply(temp, out);
-//            }
-        if (temp == 1){
-            out = doPlus(out,p);
-        }else if(temp >= 2){
-            doScalarMultiply(temp/2, p, out);
-            out = doDouble(out);
-            if (temp % 2 > 0){
+        Point out = new Point(p);
+        if(k >= 2){
+            out = doDouble(doScalarMultiply(k/2, p));
+            if (k % 2 > 0){
                 out = doPlus(out,p);
             }
         }
+        
+        return out;
     }
     
     public static void main(String[] args){
@@ -168,8 +153,8 @@ public class ECC {
         System.out.println("doback: "+a.doPlus(new Point(5,9),a.doMinus(new Point(2,4),new Point(5,9))));
         System.out.println("doDouble "+a.doDouble(new Point(2,4)));
         Point pri = new Point (0,0);
-        a.doScalarMultiply(5,new Point(0,1),pri);
-        System.out.println("doMultiply "+pri);     
+//        a.doScalarMultiply(5,new Point(0,1),pri);
+        System.out.println("doMultiply "+doScalarMultiply(3, new Point(2,4)));     
     }
     
 //    public Point getQ(){
