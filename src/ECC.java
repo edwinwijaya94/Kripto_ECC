@@ -22,37 +22,37 @@ public class ECC {
     static long m; // m is prime number
     
     //Galois Field
-    ArrayList<Point> GaloisField; //list of points satisfy Galois field
+    static ArrayList<Point> GaloisField; //list of points satisfy Galois field
     
     //point multiplication eq. -> q=k.p
 //    Point q; //will be public key
-    long k; //will be private key
-    Point p; // basis point
+    static long k; //will be private key
+    static Point p; // basis point
     
-    //constructor
-    public ECC(long a, long b, long m){
-        this.a = a;
-        this.b = b;
-        this.m = m;
-        GaloisField = new ArrayList<Point>();
+    //set equation
+    public static void setEq(long a, long b, long m){
+        ECC.a = a;
+        ECC.b= b;
+        ECC.m = m;
+        ECC.GaloisField = new ArrayList<>();
     }
     
-    public void setK(long k){
-        this.k = k;
+    public static void setK(long k){
+        ECC.k = k;
     }
     
-    public void setP(Point p){
-        this.p = p;
+    public static void setP(Point p){
+        ECC.p = p;
     }
     
     //get galois field points
-    public void countGaloisField(){
+    public static void countGaloisField(){
         for (long i = 0;i<m;i++){
             long x = i; 
             long y2 = (((x*x*x)+(a*x)+b)) % m;
             for(long j =0;j<m;j++){
                 if (((j*j) % m) == y2){
-                    GaloisField.add(new Point((int)x,(int)j));
+                    ECC.GaloisField.add(new Point((int)x,(int)j));
                 }
             }
         }  
@@ -75,6 +75,9 @@ public class ECC {
         
         out.x = (int) (((lambda*lambda) - (2*p.x)) % m);
         out.y = (int) (((lambda*(p.x-out.x)) - p.y) % m);
+        
+        if(out.x <0)
+            out.x += ECC.m;
         
         if (out.y < 0){
             out.y += m;
@@ -103,7 +106,7 @@ public class ECC {
         }
         else{
             long lambda = (p.y - q.y + m) % m;
-            System.out.println("pxqx "+(p.x-q.x));
+//            System.out.println("pxqx "+(p.x-q.x));
             BigInteger inv = BigInteger.valueOf(p.x - q.x).modInverse(BigInteger.valueOf(m));
             long invs = inv.longValue();
             lambda *= invs;
@@ -111,6 +114,10 @@ public class ECC {
             out.x = (int) (((lambda*lambda) - p.x - q.x) % m);
             
             out.y = (int) (((lambda*(p.x-out.x)-p.y)%m));
+            
+            if(out.x <0)
+                out.x += ECC.m;
+            
             if (out.y<0){
                 out.y+=m;
             }
@@ -138,23 +145,29 @@ public class ECC {
                 out = doPlus(out,p);
             }
         }
+        if(out.x <0)
+            out.x += ECC.m;
+        
+        if(out.y <0)
+            out.y += ECC.m;
         
         return out;
     }
     
     public static void main(String[] args){
-        ECC a = new ECC(1,6,11);
-        a.countGaloisField();
+//        ECC a = new ECC(1,6,11);
+        ECC.setEq(12, 14, 283);
+        ECC.countGaloisField();
 //        for (long i = 0;i<a.GaloisField.size();i++){
 //            System.out.println("G"+i+" "+a.GaloisField.get((int) i));
 //        }
-        System.out.println("doPlus: "+a.doPlus(new Point(2,4),new Point(5,9)));
-        System.out.println("doMinus: "+a.doMinus(new Point(2,4),new Point(5,9)));
-        System.out.println("doback: "+a.doPlus(new Point(5,9),a.doMinus(new Point(2,4),new Point(5,9))));
-        System.out.println("doDouble "+a.doDouble(new Point(2,4)));
+        System.out.println("doPlus: "+ECC.doPlus(new Point(2,4),new Point(5,9)));
+        System.out.println("doMinus: "+ECC.doMinus(new Point(2,4),new Point(5,9)));
+        System.out.println("doback: "+ECC.doPlus(new Point(5,9),ECC.doMinus(new Point(2,4),new Point(5,9))));
+        System.out.println("doDouble "+ECC.doDouble(new Point(2,4)));
         Point pri = new Point (0,0);
 //        a.doScalarMultiply(5,new Point(0,1),pri);
-        System.out.println("doMultiply "+doScalarMultiply(3, new Point(2,4)));     
+        System.out.println("doMultiply "+doScalarMultiply(5, new Point(0,1)));     
     }
     
 //    public Point getQ(){
