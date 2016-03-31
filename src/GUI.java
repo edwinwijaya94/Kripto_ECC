@@ -43,7 +43,7 @@ public class GUI extends javax.swing.JFrame {
         
         ECC.setEq(1, 16, 251);
         ECC.countGaloisField();
-        B = new Point(12,230); //basis
+        B = ECC.GaloisField.get((int)Math.random()*(255-0)); //basis
         
         for (long i = 0;i<ECC.GaloisField.size();i++){
             System.out.println("G"+i+" "+ECC.GaloisField.get((int) i));
