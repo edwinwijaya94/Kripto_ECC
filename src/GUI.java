@@ -479,6 +479,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void openButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButton1ActionPerformed
         // TODO add your handling code here:
+        fileChooser.setDialogTitle("Open Plain Text");
         int returnVal = fileChooser.showOpenDialog(this);
 
         // process selected file
@@ -519,6 +520,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void saveCipherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCipherButtonActionPerformed
         // TODO add your handling code here:
+        fileChooser.setDialogTitle("Save Cipher Text");
         int returnVal = fileChooser.showSaveDialog(this);
         
         // process selected file
@@ -538,6 +540,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void saveKeyButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveKeyButton1ActionPerformed
         // TODO add your handling code here:
+        fileChooser.setDialogTitle("Save Key");
         int returnVal = fileChooser.showSaveDialog(this);
        
         // process selected file
@@ -596,6 +599,28 @@ public class GUI extends javax.swing.JFrame {
 
     private void saveKeyButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveKeyButton2ActionPerformed
         // TODO add your handling code here:
+        fileChooser.setDialogTitle("Save Key");
+        int returnVal = fileChooser.showSaveDialog(this);
+       
+        // process selected file
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            String filePath = file.getAbsolutePath();
+            File privateKeyFile = new File(filePath +".pri");
+            File publicKeyFile = new File(filePath +".pub");
+            try (BufferedWriter fileOut = new BufferedWriter(new FileWriter(privateKeyFile))) {
+                privateKeyField2.write(fileOut);
+            } catch (IOException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try (BufferedWriter fileOut = new BufferedWriter(new FileWriter(publicKeyFile))) {
+                publicKeyField2.write(fileOut);
+            } catch (IOException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            //System.out.println("File access cancelled by user.");
+        }
     }//GEN-LAST:event_saveKeyButton2ActionPerformed
 
     private void decryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decryptButtonActionPerformed
@@ -623,6 +648,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void openButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButton2ActionPerformed
         // TODO add your handling code here:
+        fileChooser.setDialogTitle("Open Cipher Text");
         int returnVal = fileChooser.showOpenDialog(this);
 
         // process selected file
@@ -666,8 +692,10 @@ public class GUI extends javax.swing.JFrame {
 
     private void loadKeyButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadKeyButton1ActionPerformed
         // TODO add your handling code here:
+        fileChooser.setDialogTitle("Load Private Key");
         int returnVal = fileChooser.showOpenDialog(this);
-
+        
+        
         // process selected file
         String filePath = null;
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -696,6 +724,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void loadKeyButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadKeyButton2ActionPerformed
         // TODO add your handling code here:
+        fileChooser.setDialogTitle("Load Private Key");
         int returnVal = fileChooser.showOpenDialog(this);
 
         // process selected file
